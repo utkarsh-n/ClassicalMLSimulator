@@ -1,0 +1,67 @@
+name: ClassicalMLSimulator
+options:
+  bundleIdPrefix: com.utkarsh
+  deploymentTarget:
+    iOS: '26.0'
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: '6.0'
+    MARKETING_VERSION: '1.0'
+    CURRENT_PROJECT_VERSION: '3'
+    DEVELOPMENT_TEAM: ""
+    CODE_SIGN_STYLE: Automatic
+targets:
+  MLCore:
+    type: framework
+    platform: iOS
+    sources: [Sources/MLCore]
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.utkarsh.classicalmlsimulator.core
+  ClassicalMLSimulator:
+    type: application
+    platform: iOS
+    sources: [App]
+    dependencies:
+      - target: MLCore
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: Classical ML
+        CFBundleName: Classical ML Simulator
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        UILaunchScreen: {}
+        UIUserInterfaceStyle: Dark
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait, UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+        ITSAppUsesNonExemptEncryption: false
+        LSApplicationCategoryType: public.app-category.education
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.utkarsh.classicalmlsimulator
+        TARGETED_DEVICE_FAMILY: '1'
+        SUPPORTS_MACCATALYST: NO
+        SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: NO
+        SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD: NO
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+  ClassicalMLSimulatorUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: [UITests]
+    dependencies:
+      - target: ClassicalMLSimulator
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.utkarsh.classicalmlsimulator.uitests
+schemes:
+  ClassicalMLSimulator:
+    build:
+      targets:
+        ClassicalMLSimulator: all
+    test:
+      targets: [ClassicalMLSimulatorUITests]
